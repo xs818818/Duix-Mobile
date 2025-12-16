@@ -1,53 +1,51 @@
-# Duix Mobile for Android SDK 文档
+# Duix Mobile for Android SDK Documentation
 
-简体中文 | [English](./README_en.md)
+English | [中文](./README_zh.md)
 
-## 一、产品介绍
+## 1. Product Overview
 
-`Duix Mobile for Android` 是一套轻量级、纯离线的 Android 平台 2D 虚拟人解决方案，支持通过语音音频驱动数字人形象并进行实时渲染。
+`Duix Mobile for Android` is a lightweight, fully offline 2D digital human solution for Android, supporting real-time rendering of digital avatars driven by voice audio.
 
-### 1.1 应用场景
+### 1.1 Application Scenarios
 
-- **部署成本低**：适用于大屏终端、政务展厅、银行等无人值守场景。
-- **网络依赖小**：完全本地运行，无需联网，可在地铁、偏远地区稳定运行。
-- **功能多样化**：可服务于导览讲解、问答客服、智能陪伴等多种业务形态。
+- **Low deployment cost**: Suitable for unattended scenarios such as large-screen terminals, government halls, and banks.
+- **Minimal network dependency**: Runs entirely locally, no internet required, stable operation in subways and remote areas.
+- **Diverse functionality**: Can serve as a guide, Q&A customer service, intelligent companion, and more.
 
-### 1.2 核心功能
+### 1.2 Core Features
 
-- 数字人形象定制与本地渲染
-- 实时语音驱动播报（支持 WAV 播放和 PCM 推送）
-- 动作播放控制（指定动作、随机动作）
-- 资源自动下载管理
-
----
-
-## 二、术语说明
-
-| 术语                | 含义                                                                     |
-|-------------------|------------------------------------------------------------------------|
-| PCM               | Pulse-Code Modulation，16kHz 采样率、16bit 位深、Mono 单通道的原始音频流                |
-| WAV               | 一种音频文件格式，支持 PCM 编码，适合短语音播放                                             |
-| RenderSink        | 渲染数据接收接口，由 SDK 提供实现，可用于自定义渲染或默认展示                                      |
-| DUIX              | 数字人主控对象，集成了模型加载、渲染、播报、动作等能力                                            |
-| GLES              | OpenGL ES，Android 渲染图像用到的图形接口                                          |
-| SpecialAction     | 模型附带的 JSON 文件，标注动作区间（例如打招呼、挥手等）                                        |
+- Customizable digital avatar and local rendering
+- Real-time voice-driven playback (supports WAV playback and PCM streaming)
+- Motion playback control (specific or random actions)
+- Automatic resource download management
 
 ---
 
-## 三、SDK 获取方式
+## 2. Terminology
 
-> ✅ 当前 SDK 以本地 Module 或 AAR 方式提供。可联系商务或技术支持获取 SDK 包。
+| Term               | Meaning                                                                    |
+|--------------------|----------------------------------------------------------------------------|
+| PCM                | Pulse-Code Modulation, raw audio stream with 16kHz sample rate, 16-bit depth, Mono channel |
+| WAV                | An audio file format that supports PCM encoding, suitable for short voice playback |
+| RenderSink         | Rendering data reception interface, implemented by the SDK, can be used for custom rendering or default display |
+| DUIX               | Main control object of the digital human, integrates model loading, rendering, broadcasting, and motion control |
+| GLES               | OpenGL ES, a graphics interface for rendering images on Android               |
+| SpecialAction      | A JSON file attached to the model that marks action intervals (e.g., greetings, waving) |
 
-### 3.1 Module 引用（推荐）
+---
 
-1. 获取完整源码包，解压后将 `duix-sdk` 目录复制到项目根目录下。
-2. 在项目 `settings.gradle` 中添加：
+## 3. SDK Access
+
+### 3.1 Module Reference (Recommended)
+
+1. Obtain the complete source package, unzip it, and copy the `duix-sdk` directory to the project root directory.
+2. In the project `settings.gradle`, add:
 
 ```gradle
 include ':duix-sdk'
 ```
 
-3. 在模块 `build.gradle` 中添加依赖：
+3. In the module's `build.gradle`, add the dependency:
 
 ```gradle
 dependencies {
@@ -55,10 +53,10 @@ dependencies {
 }
 ```
 
-### 3.2 AAR 引用（可选）
+### 3.2 AAR Reference (Optional)
 
-1. 将duix-sdk模块编译的 `duix-sdk-release.aar` 放入 `libs/` 目录。
-2. 添加依赖：
+1. Place the compiled `duix-sdk-release.aar` module into the `libs/` directory.
+2. Add the dependency:
 
 ```gradle
 dependencies {
@@ -68,75 +66,71 @@ dependencies {
 
 ---
 
-## 四、集成要求
+## 4. Integration Requirements
 
-| 项目     | 描述                                                 |
-|--------|----------------------------------------------------|
-| 系统     | 支持 Android 10+ 系统。                                 |
-| CPU架构  | armeabi-v7a, arm64-v8a                             |
-| 硬件要求   | 要求设备 CPU8 核及以上(骁龙8 Gen2),内存 8G 及以上。可用存储空间 1GB 及以上。 |
-| 网络     | 无（完全本地运行）                                          |
-| 开发 IDE | Android Studio Giraffe 2022.3.1 Patch 2            |
-| 内存要求   | 可用于数字人的内存 >= 800MB                                 |
-
-
-**编译项目的Gradle使用的JDK版本为17,需要在File->Setting->Build,Execution,Deployment->Grade Projects->Gradle JDK: ${选择一个17版本的JDK}**
+| Item           | Description                                                     |
+|----------------|-----------------------------------------------------------------|
+| System         | Supports Android 10+ systems.                                    |
+| CPU Architecture | armeabi-v7a, arm64-v8a                                           |
+| Hardware Requirements | Device CPU with 8 or more cores (Snapdragon 8 Gen 2), 8GB or more memory, available storage space of 1GB or more |
+| Network        | None (Fully local operation)                                    |
+| Development IDE | Android Studio Giraffe 2022.3.1 Patch 2                         |
+| Memory Requirements | Minimum 800MB memory available for the digital human          |
 
 ---
 
-## 五、使用流程概览
+## 5. Usage Flow Overview
 
 ```mermaid
 graph TD
-A[检查配置与模型] --> B[构建 DUIX 实例]
-B --> C[调用 init 初始化]
-C --> D[展示形象 / 渲染]
-D --> E[PCM 或 WAV 音频驱动]
-E --> F[播放控制与动作触发]
-F --> G[资源释放]
+A[Check Configuration and Models] --> B[Build DUIX Instance]
+B --> C[Call init to Initialize]
+C --> D[Display Avatar / Render]
+D --> E[PCM or WAV Audio Driving]
+E --> F[Playback Control & Motion Triggering]
+F --> G[Resource Release]
 ```
 
 ---
 
-## 六、关键接口与调用示例
+## 6. Key Interfaces and Example Calls
 
-### 6.1. 模型检查及下载
+### 6.1 Model Check and Download
 
-使用渲染服务前需要将基础配置及模型文件同步到本地存储中,SDK中提供了VirtualModelUtil简单演示了模型下载解压流程。
-若模型下载过慢或无法下载，开发者可以选择将模型包缓存到自己的存储服务。
+Before using the rendering service, ensure that the basic configuration and model files are synchronized to local storage. The SDK provides a simple demonstration of the model download and decompression process using `VirtualModelUtil`. If model download is slow or fails, developers can choose to cache the model package to their own storage service.
 
-> 函数定义: `ai.guiji.duix.sdk.client.VirtualModelUtil`
+> Function Definition: `ai.guiji.duix.sdk.client.VirtualModelUtil`
 
 ```
-// 检查基础配置是否已下载
+// Check if base configuration is downloaded
 boolean checkBaseConfig(Context context)
 
-// 检查模型是否已下载
+// Check if the model is downloaded
 boolean checkModel(Context context, String name)
 
-// 基础配置下载
+// Base configuration download
 void baseConfigDownload(Context context, String url, ModelDownloadCallback callback)
 
-// 模型下载
+// Model download
 void modelDownload(Context context, String modelUrl, ModelDownloadCallback callback)
 ```
 
-`ModelDownloadCallback` 包含进度、完成、失败等回调，详见 SDK 定义。
+`ModelDownloadCallback` includes progress, completion, failure callbacks, etc., as defined in the SDK.
 
 ```
 interface ModelDownloadCallback {
-    // 下载进度
+    // Download progress
     void onDownloadProgress(String url, long current, long total);
-    // 解压进度
+    // Unzip progress
     void onUnzipProgress(String url, long current, long total);
-    // 下载解压完成
+    // Download and unzip complete
     void onDownloadComplete(String url, File dir);
-    // 下载解压失败
+    // Download and unzip failed
     void onDownloadFail(String url, int code, String msg);
 }
 ```
 
-**调用示例**:
+**Call Example**:
 
 ```kotlin
 if (!VirtualModelUtil.checkBaseConfig(mContext)){
@@ -148,36 +142,34 @@ if (!VirtualModelUtil.checkBaseConfig(mContext)){
 if (!VirtualModelUtil.checkModel(mContext, modelUrl)){
     VirtualModelUtil.modelDownload(mContext, modelUrl, callback)
 }
-
 ```
 
 ---
 
-### 6.2. 初始化与渲染启动
+### 6.2 Initialization and Rendering Start
 
-在渲染页onCreate()阶段构建DUIX对象并调用init接口
+In the `onCreate()` stage of the rendering page, build the DUIX object and call the init interface.
 
-> 函数定义: `ai.guiji.duix.sdk.client.DUIX`
+> Function Definition: `ai.guiji.duix.sdk.client.DUIX`
 
 ```
-// 构建DUIX对象
+// Build DUIX object
 public DUIX(Context context, String modelName, RenderSink sink, Callback callback)
 
-// 初始化DUIX服务
+// Initialize DUIX service
 void init()
 ```
 
-**DUIX对象构建说明**:
+**DUIX Object Construction Explanation**:
 
-| 参数         | 类型         | 描述                                  |
-|------------|------------|-------------------------------------|
-| context    | Context    | 系统上下文                               |
-| modelName  | String     | 可以传递模型下载的URL(已下载完成)或缓存的文件名          |
-| render     | RenderSink | 渲染数据接口，sdk提供了默认的渲染组件继承自该接口，也可以自己实现  |
-| callback   | Callback   | SDK处理的各种回调事件                        |
+| Parameter     | Type      | Description                                                    |
+|---------------|-----------|----------------------------------------------------------------|
+| context       | Context   | System context                                                  |
+| modelName     | String    | Can pass the model download URL (if downloaded) or cached filename |
+| render        | RenderSink| Rendering data interface, SDK provides a default rendering component inheriting from this interface, or you can implement it yourself |
+| callback      | Callback  | Various callback events handled by the SDK                      |
 
-
-其中**Callback**的定义: `ai.guiji.duix.sdk.client.Callback`
+Where **Callback** is defined as: `ai.guiji.duix.sdk.client.Callback`
 
 ```
 interface Callback {
@@ -185,7 +177,7 @@ interface Callback {
 }
 ```
 
-**调用示例**:
+**Call Example**:
 
 ```kotlin
 duix = DUIX(mContext, modelUrl, mDUIXRender) { event, msg, info ->
@@ -198,38 +190,37 @@ duix = DUIX(mContext, modelUrl, mDUIXRender) { event, msg, info ->
             initError()
         }
         // ...
-
     }
 }
-// 异步回调结果
+// Asynchronous callback result
 duix?.init()
 ```
 
-在init回调中确认初始化结果
+In the `init` callback, confirm the initialization result.
 
 ---
 
-### 6.3. 数字人形象展示
+### 6.3 Digital Human Avatar Display
 
-使用 SDK 提供的 `DUIXRenderer` 和 `DUIXTextureView` 可快速实现支持透明通道的渲染。也可以自己实现RenderSink接口自定义渲染逻辑。
+Use the SDK-provided `DUIXRenderer` and `DUIXTextureView` to quickly implement rendering with transparency support. Alternatively, you can implement the `RenderSink` interface to customize the rendering logic.
 
-其中**RenderSink**的定义如下: `ai.guiji.duix.sdk.client.render.RenderSink`
+The **RenderSink** definition is as follows: `ai.guiji.duix.sdk.client.render.RenderSink`
 
 ```java
 /**
- * 渲染管道，通过该接口返回渲染数据
+ * Rendering pipeline, returns rendering data through this interface
  */
 public interface RenderSink {
 
-    // frame中的buffer数据以bgr顺序排列
+    // The frame's buffer data is arranged in BGR order
     void onVideoFrame(ImageFrame imageFrame);
 
 }
 ```
 
-**调用示例**:
+**Call Example**:
 
-使用DUIXRenderer及DUIXTextureView控件简单实现渲染展示,该控件支持透明通道可以自由设置背景及前景
+Use `DUIXRenderer` and `DUIXTextureView` to quickly implement rendering. These controls support transparency and can freely set the background and foreground.
 
 ```kotlin
 override fun onCreate(savedInstanceState: Bundle?) {
@@ -242,11 +233,11 @@ override fun onCreate(savedInstanceState: Bundle?) {
         )
 
     binding.glTextureView.setEGLContextClientVersion(GL_CONTEXT_VERSION)
-    binding.glTextureView.setEGLConfigChooser(8, 8, 8, 8, 16, 0) // 透明
-    binding.glTextureView.isOpaque = false           // 透明
+    binding.glTextureView.setEGLConfigChooser(8, 8, 8, 8, 16, 0) // Transparency
+    binding.glTextureView.isOpaque = false           // Transparency
     binding.glTextureView.setRenderer(mDUIXRender)
     binding.glTextureView.renderMode =
-        GLSurfaceView.RENDERMODE_WHEN_DIRTY      // 一定要在设置完Render之后再调用
+        GLSurfaceView.RENDERMODE_WHEN_DIRTY      // Must be called after setting the renderer
 
     duix = DUIX(mContext, modelUrl, mDUIXRender) { event, msg, _ ->
     }
@@ -256,31 +247,30 @@ override fun onCreate(savedInstanceState: Bundle?) {
 
 ---
 
-### 6.4 播报控制
+### 6.4 Broadcasting Control
 
-#### 使用流式推送PCM驱动数字人播报
+#### Use Streaming PCM to Drive Digital Human Broadcasting
 
-**PCM格式:16k采样率单通道16位深**
+**PCM Format: 16kHz sample rate, single channel, 16-bit depth**
 
-> 函数定义: `ai.guiji.duix.sdk.client.DUIX`
+> Function Definition: `ai.guiji.duix.sdk.client.DUIX`
 
 ```
-// 通知服务开始推送音频
+// Notify service to start pushing audio
 void startPush()
 
-// 推送PCM数据
+// Push PCM data
 void pushPcm(byte[] buffer)
 
-// 完成一段音频推送(音频推送完就调要该函数，而不是等播放完成再调用。)
+// Finish a segment of audio push (Call this after the audio push is complete, not after playback finishes)
 void stopPush()
-
 ```
 
-startPush、pushPcm、stopPush需要成对调用，pushPcm不宜过长。可以在一整段音频推送完后调用stopPush结束当前会话，下一段音频再使用startPush重新开启推送。
+`startPush`, `pushPcm`, and `stopPush` need to be called in pairs. `pushPcm` should not be too long. After pushing the entire audio, call `stopPush` to end the session. Use `startPush` again for the next audio.
 
-**每段startPush到stopPush中间的音频数据最少要1秒(32000字节)否则无法触发口型驱动，可以自行使用空白帧填充。**
+**The audio data between each startPush and stopPush segment should be at least 1 second (32000 bytes), otherwise the mouth shape driver cannot be triggered, and blank frames can be used to fill in.**
 
-**调用示例**:
+**Call Example**:
 
 ```kotlin
 val thread = Thread {
@@ -300,112 +290,42 @@ thread.start()
 
 ---
 
-#### WAV 播放驱动
+### 6.5 Motion Control
 
-> 函数定义: `ai.guiji.duix.sdk.client.DUIX`
+#### Play Specific Motion Interval
 
-```
-void playAudio(String wavPath) 
-```
+The model supports new motion intervals marked in `SpecialAction.json`
 
-**该函数兼容旧的wav驱动数字人接口，在内部实际是调用了PCM推流方式实现驱动。**
-
-
-**参数说明**:
-
-| 参数      | 类型     | 描述                    |
-|---------|--------|-----------------------|
-| wavPath | String | 16k采样率单通道16位深的wav本地文件 |
-
-
-**调用示例**:
-
-```kotlin
-duix?.playAudio(wavPath)
-```
-
-音频播放状态及进度回调:
-
-```kotlin
-object : Callback {
-    fun onEvent(event: String, msg: String, info: Object) {
-        when (event) {
-            // ...
-
-            "play.start" -> {
-                // 开始播放音频
-            }
-
-            "play.end" -> {
-                // 完成播放音频
-            }
-            "play.error" -> {
-                // 音频播放异常
-            }
-        }
-    }
-}
-```
-
----
-
-#### 终止当前播报
-
-当数字人正在播报时调用该接口终止播报。
-
-> 函数定义: `ai.guiji.duix.sdk.client.DUIX`
-
-```
-boolean stopAudio();
-```
-
-**调用示例如下**：
-
-```kotlin
-duix?.stopAudio()
-```
-
----
-
-### 6.5. 动作控制
-
-
-#### 播放指定动作区间
-
-模型中支持新的动作区间标注(SpecialAction.json)
-
-> 函数定义: `ai.guiji.duix.sdk.client.DUIX`
+> Function Definition: `ai.guiji.duix.sdk.client.DUIX`
 
 ```
 /**
- * 播放指定动作区间
- * @param name 动作区间名称，在init成功回调时，可以在@{ModelInfo.getSilenceRegion()}中获取到可用的动作区间
- * @param now 是否立即播放 true: 立即播放; false: 等待当前静默区间或动作区间播放完毕后播放
+ * Play specific motion interval
+ * @param name The motion interval name, which can be obtained from @{ModelInfo.getSilenceRegion()} after init callback
+ * @param now Whether to play immediately: true: play now; false: wait for current silent or motion interval to finish
  */
 void startMotion(String name, boolean now)
 ```
 
-**调用示例如下**：
+**Call Example**:
 
 ```kotlin
-duix?.startMotion("打招呼", true)
+duix?.startMotion("Greeting", true)
 ```
 
-#### 随机播放动作区间
+#### Randomly Play Motion Interval
 
-随机播放场景及旧的标注协议(config.json)
-
-> 函数定义: `ai.guiji.duix.sdk.client.DUIX`
+> Function Definition: `ai.guiji.duix.sdk.client.DUIX`
 
 ```
 /**
- * 随机播放一个动作区间
- * @param now 是否立即播放 true: 立即播放; false: 等待当前静默区间或动作区间播放完毕后播放
+ * Randomly play a motion interval
+ * @param now Whether to play immediately: true: play now; false: wait for current silent or motion interval to finish
  */
 void startRandomMotion(boolean now);
 ```
 
-**调用示例如下**：
+**Call Example**:
 
 ```kotlin
 duix?.startRandomMotion(true)
@@ -413,9 +333,9 @@ duix?.startRandomMotion(true)
 
 ---
 
-## 七. Proguard配置
+## 7. Proguard Configuration
 
-如果代码使用了混淆，请在proguard-rules.pro中配置：
+If using obfuscation, add the following in `proguard-rules.pro`:
 
 ```proguard
 -keep class ai.guiji.duix.DuixNcnn{*; }
@@ -423,65 +343,63 @@ duix?.startRandomMotion(true)
 
 ---
 
-## 八、注意事项
+## 8. Precautions
 
-1. 驱动渲染初始化前需要确保基础配置文件及模型下载到指定位置。
-2. 播放的PCM音频不宜过长，播放的PCM缓存在内存中，过长的音频流可能导致内存溢出。
-3. 替换预览模型可以在MainActivity.kt文件中修改modelUrl的值，使用SDK中自带的文件下载解压管理以获得完整的模型文件。
-4. 音频驱动的格式: 16k采样率单通道16位深度
-5. 设备性能不足时可能导致音频特征提取的速度跟不上音频播放的速度，可以使用duix?.setReporter()函数添加一个监控观察帧渲染返回的信息。
-6. 每段startPush到stopPush中间的音频数据最少要1秒(32000字节)否则无法触发口型驱动，可以自行使用空白帧填充。
-
----
-
-## 九、常见问题与排查指南
-
-| 问题现象                | 可能原因                     | 解决方案                   |
-|---------------------|--------------------------|------------------------|
-| init 回调失败           | 模型路径错误或未下载完成             | 使用 `checkModel` 检查模型状态 |
-| 渲染黑屏                | EGL 配置或纹理视图设置错误          | 使用 SDK 提供示例中的设置方法      |
-| PCM 无播报效果           | 格式不符或未调用 startPush       | 确保音频格式正确并调用推送方法        |
-| 模型下载过慢              | 网络不稳定或 CDN 受限            | 支持自建模型文件托管服务           |
+1. Ensure that the base configuration file and model are downloaded to the specified location before driving rendering initialization.
+2. PCM audio should not be too long, as PCM buffers are cached in memory; long audio streams may cause memory overflow.
+3. To replace the preview model, modify the `modelUrl` value in `MainActivity.kt` and use the SDK's built-in file download and decompression management to obtain the complete model files.
+4. Audio driving format: 16kHz sample rate, single channel, 16-bit depth.
+5. Insufficient device performance may result in the audio feature extraction speed not matching the playback speed. You can use `duix?.setReporter()` to monitor frame rendering information.
 
 ---
 
-## 十、版本记录
+## 9. FAQ and Troubleshooting Guide
+
+| Issue                          | Possible Cause               | Solution                     |
+|---------------------------------|------------------------------|------------------------------|
+| init callback failed            | Model path error or model not downloaded | Use `checkModel` to check model status |
+| Rendering black screen          | EGL configuration or texture view error | Use SDK-provided example settings |
+| No PCM playback effect          | Incorrect format or `startPush` not called | Ensure audio format is correct and call push method |
+| Model download slow             | Unstable network or restricted CDN | Support self-hosted model file storage service |
+
+---
+
+## 10. Version History
 
 **<a>4.0.1</a>**
 
-```text
-1. 支持PCM音频流驱动数字人，提升音频播放响应速度。
-2. 优化动作区间播放，可根据模型配置指定播放动作区间。
-3. 自定义音频播放器，去除Exoplayer播放依赖
-4. 提供简洁的模型下载同步管理工具
-```
+1. Supports PCM audio stream driving the digital human, improving audio playback response speed.
+2. Optimized motion interval playback, allowing specific motion intervals based on model configuration.
+3. Custom audio player, removed Exoplayer playback dependency.
+4. Provided simplified model download synchronization management tools.
+5. The audio data between each startPush and stopPush segment should be at least 1 second (32000 bytes), otherwise the mouth shape driver cannot be triggered, and blank frames can be used to fill in.
 
 **<a>3.0.5</a>**
 
 ```text
-1. 更新arm32位cpu的libonnxruntime.so版本以修复兼容问题。
-2. 修改动作区间播放函数，可以使用随机播放和顺序播放，需要主动调用停止播放动作区间以回到静默区间。
+1. Updated arm32 CPU libonnxruntime.so version to fix compatibility issues.
+2. Modified motion interval playback function, supports random and sequential playback, requires manual call to stop playback to return to silent interval.
 ```
 
 **<a>3.0.4</a>**
 
 ```text
-1. 修复部分设备gl默认float低精度导致无法正常显示形象问题。
+1. Fixed model display issue due to low float precision on some devices.
 ```
 
 **<a>3.0.3</a>**
 
 ```text
-1. 优化本地渲染。
+1. Optimized local rendering.
 ```
 
-## 十一、🔗 开源依赖
+## 11. 🔗 Open-source Dependencies
 
-| 模块                                        | 描述                |
-|-------------------------------------------|-------------------|
-| [onnx](https://github.com/onnx/onnx)      | 通用AI模型标准格式        |
-| [ncnn](https://github.com/Tencent/ncnn)   | 高性能神经网络计算框架（腾讯）   |
+| Module                                   | Description                    |
+|------------------------------------------|--------------------------------|
+| [onnx](https://github.com/onnx/onnx)     | General AI model standard format |
+| [ncnn](https://github.com/Tencent/ncnn)  | High-performance neural network computing framework (Tencent) |
 
 ---
 
-如需更多帮助，请联系技术支持团队。
+For more help, please contact the technical support team.

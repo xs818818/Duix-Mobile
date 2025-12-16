@@ -1,84 +1,81 @@
-# Duix Mobile for iOS SDK ⽂档
+# Duix Mobile for iOS SDK Documentation
 
-简体中文 | [English](./README_en.md)
+English | [中文](./README_zh.md)
 
-## 一、产品概述
+## 1. Product Overview
 
-`Duix Mobile for iOS` 是一套轻量级的本地部署 2D 虚拟人解决方案，适用于 iOS 端，支持通过语音实时驱动虚拟人形象进行口型播报和动作响应。
+`Duix Mobile for iOS` is a lightweight, locally deployed 2D digital human solution for iOS, supporting real-time avatar lip-sync and motion response driven by voice.
 
-### 1.1 适用场景
+### 1.1 Application Scenarios
 
-- **部署成本低**：无服务端依赖，适用于政务终端、机场、展厅等场景。
-- **弱网友好**：支持完全离线运行。
-- **功能多样化**：支持导览播报、问答服务、数字迎宾等多种智能场景。
+- **Low deployment cost**: No server dependency, suitable for government terminals, airports, exhibition halls, and more.
+- **Offline friendly**: Fully offline operation supported.
+- **Diverse functionality**: Supports guided broadcasting, Q&A services, digital reception, and other intelligent scenarios.
 
-### 1.2 核心功能
+### 1.2 Core Features
 
-- **数字人渲染与驱动**：支持本地渲染虚拟人形象，响应语音输入实时口型驱动；
-- **语音播报控制**：支持音频播放、PCM 推流、动作与播报联动；
-- **动作控制系统**：可自定义启动、停止、随机动作；
-
-
+- **Digital human rendering and driving**: Supports local avatar rendering, real-time lip-sync driven by voice input.
+- **Voice playback control**: Supports audio playback, PCM streaming, and action-broadcast linkage.
+- **Motion control system**: Customizable start, stop, and random actions.
 
 ---
 
-## 二、术语说明
+## 2. Terminology
 
-| 术语           | 含义                                                         |
-|----------------|--------------------------------------------------------------|
-| PCM            | 原始音频流格式（16kHz，16bit，Mono）                        |
-| WAV            | 音频文件格式，适用于短语音播放，内部仍为 PCM 编码         |
-| Session        | 一次完整播报流程（推送→响应→结束）                         |
-| DUIX-PRO       | 本地渲染与驱动管理器，实现模型加载、渲染控制、播报驱动等功能 |
-| GJLPCMManager  | 提供的 PCM 管理类，用于处理音频文件和推送逻辑          |
+| Term            | Description                                                                 |
+|-----------------|-----------------------------------------------------------------------------|
+| PCM             | Raw audio stream format (16kHz, 16bit, Mono)                                |
+| WAV             | Audio file format suitable for short voice playback (internally PCM encoded)|
+| Session         | Complete broadcast process (Push → Response → End)                          |
+| DUIX-PRO        | Local rendering and driving manager handling model loading, render control, etc. |
+| GJLPCMManager   | PCM management class for handling audio files and streaming logic           |
 
 ---
 
-## 三、SDK 获取与集成
+## 3. SDK Acquisition & Integration
 
+### 3.1 Manual Integration (Recommended)
 
-### 3.1 手动集成（推荐）
-
-1. 将 `GJLocalDigitalSDK.framework` 拖入 Xcode 项目中，设置为：**Embed & Sign**。
-2. 在 `Build Phases > Link Binary With Libraries` 中添加：`AVFoundation.framework`。
-3. Info.plist 中添加麦克风权限：
+1. Drag `GJLocalDigitalSDK.framework` into Xcode project → Set to **Embed & Sign**
+2. Add `AVFoundation.framework` in `Build Phases > Link Binary With Libraries`
+3. Add microphone permission in Info.plist:
 
 ```xml
 <key>NSMicrophoneUsageDescription</key>
-<string>App需要使用麦克风权限驱动数字人语音播报</string>
+<string>App requires microphone access to drive digital human voice broadcast</string>
 ```
 
 ---
 
-## 四、集成要求
+## 4. Integration Requirements
 
-| 项目         | 要求                           |
-|--------------|----------------------------------|
-| 系统版本     | iOS 12.0 及以上                  |
-| 开发工具     | Xcode 12 及以上                  |
-| 支持设备     | iPhone 8 及以上                  |
-| 运行环境     | 支持离线，无需联网               |
-| CPU 与内存   | 推荐 A12 芯片及以上，内存 ≥ 3GB |
+| Item           | Requirement                              |
+|----------------|------------------------------------------|
+| OS Version     | iOS 12.0+                                |
+| Development Tools | Xcode 12+                                |
+| Supported Devices | iPhone 8+                                |
+| Runtime Environment | Offline operation (no network required)  |
+| CPU & Memory   | Recommended A12+ chip, ≥3GB RAM          |
 
 ---
 
-
-## 五、使用流程概览
+## 5. Workflow Overview
 
 ```mermaid
 graph TD
-A[检查配置与模型] --> B[构建 DUIX 实例]
-B --> C[调用 init 初始化]
-C --> D[展示形象 / 渲染]
-D --> E[PCM 或 WAV 音频驱动]
-E --> F[播放控制与动作触发]
-F --> G[资源释放]
+A[Check Configuration and Model] --> B[Build DUIX Instance]
+B --> C[Call init to initialize]
+C --> D[Display Image / Render]
+D --> E[PCM or WAV Audio Driving]
+E --> F[Playback Control and Action Trigger]
+F --> G[Resource Release]
 ```
 
 ---
 
-## 六、快速开始示例
-```objc
+## 6. Quick Start Example
+
+```
 NSInteger result = [[GJLDigitalManager manager] initBaseModel:basePath 
                                                  digitalModel:digitalPath 
                                                     showView:self.showView];
@@ -87,283 +84,273 @@ if (result == 1) {
         if (isSuccess) {
             [[GJLDigitalManager manager] toStartRuning];
         } else {
-            NSLog(@"启动失败：%@", errorMsg);
+            NSLog(@"Start failed: %@", errorMsg);
         }
     }];
 }
-```
 
-> 注意：basePath 为基础资源目录，digitalPath 为模型目录
+```
+> Note: basePath = base resource directory, digitalPath = model directory
 
 ---
 
-## 七、关键接口与使用说明
+## 7. Key Interfaces & Usage
 
-
-### 7.1 初始化配置
+### 7.1 Initialization Configuration
 
 ```
 /**
- * 初始化数字人服务
- * @param basePath    基础模型路径（固定不变）
- * @param digitalPath 数字人模型路径（替换数字人时更新此路径）
- * @param showView    数字人渲染视图
- * @return 状态码 1=成功, 0=未授权, -1=失败
+ * Initialize digital human service
+ * @param basePath    Base model path (fixed)
+ * @param digitalPath Digital human model path (update when replacing digital human)
+ * @param showView    Digital human rendering view
+ * @return Status code 1=success, 0=unauthorized, -1=failure
  */
 -(NSInteger)initBaseModel:(NSString*)basePath digitalModel:(NSString*)digitalPath showView:(UIView*)showView;
 ```
 
-
-
-### 7.2 渲染数字人控制
+### 7.2 Digital Human Rendering Control
 
 ```
 /*
-*启动数字人渲染
+* Start digital human rendering
 */
 -(void)toStart:(void (^) (BOOL isSuccess, NSString *errorMsg))block;
 ```
 
-
 ```
 /*
-*停止渲染并释放资源
+* Stop rendering and release resources
 */
 -(void)toStop;
 ```
 
-
 ```
 /*
-*恢复播放（暂停后调用）
+* Resume playback (call after pause)
 */
 -(void)toPlay;
 ```
 
 ```
 /*
-*暂停数字人播放
+* Pause digital human playback
 */
 -(void)toPause;
 ```
 
-
-### 7.3 背景管理
+### 7.3 Background Management
 
 ```
 /**
- * 动态替换背景
- * @param bbgPath JPG格式背景图路径
+ * Dynamically replace background
+ * @param bbgPath JPG format background image path
  */
 -(void)toChangeBBGWithPath:(NSString*)bbgPath;
 ```
 
-
-
-
-### 7.4 音频播报控制
+### 7.4 Audio Control
 
 ```
 /*
-*audioData播放音频流 ，参考demo里面GJLPCMManager类里toSpeakWithPath 转换成pcm的代码
-*驱动数字人播报(PCM流)
+* Play audio stream (PCM format), refer to toSpeakWithPath in GJLPCMManager demo class for PCM conversion
+* Drive digital human broadcast (PCM stream)
 */
 -(void)toWavPcmData:(NSData*)audioData;
 ```
 
 ```
 /*
-* 开始音频流播放
+* Start audio stream playback
 */
 - (void)startPlaying;
 ```
 
-
 ```
 /*
-* 结束音频流播放
+* Stop audio stream playback
 */
 - (void)stopPlaying:(void (^)( BOOL isSuccess))success;
 ```
 
-
 ```
 /*
-*设置静音模式
+* Set mute mode
 */
 -(void)toMute:(BOOL)isMute;
 ```
 
 ```
 /*
-*清空音频缓冲区
+* Clear audio buffer
 */
 -(void)clearAudioBuffer;
 ```
 
 ```
 /*
-*暂停播放音频流
+* Pause audio stream playback
 */
 -(void)toPausePcm;
 ```
 
-
 ```
 /*
-*恢复播放音频流
+* Resume audio stream playback
 */
 -(void)toResumePcm;
 ```
 
 ```
 /*
-* 是否启用录音
+* Enable/disable recording
 */
 -(void)toEnableRecord:(BOOL)isEnable;
 ```
 
+### 7.5 Streaming Session Management
 
-### 7.5 流式会话管理
 ```
 /*
-*启动流式会话
+* Start streaming session
 */
 -(void)toStartRuning;
 ```
 
 ```
 /*
-*开始新会话（单句/段落）
+* Start new session (single sentence/paragraph)
 */
 -(void)newSession;
 ```
 
 ```
 /*
-*结束当前会话
+* End current session
 */
 -(void)finishSession;
 ```
 
-
 ```
 /*
-*继续会话（finish后调用）
+* Continue session (call after finish)
 */
 -(void)continueSession;
 ```
 
-
-### 7.6 动作控制
+### 7.6 Motion Control
 
 ```
 /*
-* 启用随机动作（建议在首段音频开始时调用）
-* 返回：0=不支持, 1=成功
+* Enable random motions (recommended at start of first audio segment)
+* Return: 0=unsupported, 1=success
 */
 -(NSInteger)toRandomMotion;
 ```
 
 ```
 /*
-* 启用开始动作（首段音频开始时调用）
-* 返回：0=不支持, 1=成功
+* Enable start motion (call at beginning of first audio segment)
+* Return: 0=unsupported, 1=success
 */
 -(NSInteger)toStartMotion;
 ```
 
 ```
 /*
-* 结束动作（末段音频结束时调用）
-*isQuickly: YES=立即结束, NO=等待动作完成
-*返回：0=不支持, 1=成功
+* End motion (call at end of last audio segment)
+* isQuickly: YES=end immediately, NO=wait for motion completion
+* Return: 0=unsupported, 1=success
 */
 -(NSInteger)toSopMotion:(BOOL)isQuickly;
 ```
 
-### 7.7 状态查询
+### 7.7 Status Queries
 
 ```
 /*
-*获取数字人模型尺寸（需初始化后调用）
+* Get digital human model dimensions (call after initialization)
 */ 
 -(CGSize)getDigitalSize;
 ```
 
 ```
 /*
-*检查授权状态（1=已授权）
+* Check authorization status (1=authorized)
 */ 
 -(NSInteger)isGetAuth;
 ```
 
 ---
 
-## 八、回调定义
+## 8. Callback Definitions
 
 ```
 /*
-*数字人渲染报错
-*错误码说明：
-*    0  = 未授权 
-*   -1 = 未初始化 
-*   50009 = 资源超时/未配置
+* Digital human rendering error
+* Error codes:
+*    0  = Unauthorized 
+*   -1 = Uninitialized 
+*   50009 = Resource timeout/unconfigured
 */
 @property (nonatomic, copy) void (^playFailed)(NSInteger code,NSString *errorMsg);
+```
 
+```
 /*
-*音频播放结束回调
+* Audio playback ended callback
 */
 @property (nonatomic, copy) void (^audioPlayEnd)(void);
+```
 
+```
 /*
-*音频播放进度回调
-/
+* Audio playback progress callback
+*/
 @property (nonatomic, copy) void (^audioPlayProgress)(float current,float total);
 ```
 
 ---
 
-## 九、常见问题与排查指南
+## 9. FAQ & Troubleshooting
 
-| 问题现象           | 可能原因               | 建议处理方式                         |
-|--------------------|------------------------|--------------------------------------|
-| 初始化返回 -1      | SDK 授权失败            | 检查 info.plist 是否包含授权字段      |
-| 无法渲染画面        | showView 为空或未添加   | 确保 viewController 中已渲染视图挂载 |
-| 播报无响应          | 音频格式错误或路径无效   | 确保 PCM 格式正确 / 路径有效         |
-| 播放提前中断        | 会话未续接 / 缓冲区溢出   | 检查是否正确调用 `continueSession`   |
+| Symptom               | Possible Cause               | Recommended Solution               |
+|-----------------------|------------------------------|------------------------------------|
+| Initialization returns -1 | SDK authorization failed   | Check info.plist for auth fields   |
+| No rendered output     | showView empty or not added | Ensure view is mounted in controller |
+| No broadcast response  | Invalid audio format/path   | Verify PCM format/path validity    |
+| Premature playback stop| Session not continued/buffer overflow | Check `continueSession` usage     |
 
----
+## 10. Version History
 
-## 十、版本更新记录
+### v1.2.3
+
+- Added support for 128 models
 
 ### v1.2.0
 
-- 新增 PCM 推流支持
+- Added PCM streaming support
 
 ### v1.0.3
 
-- 支持透明背景
-- 优化模型解压内存
+- Supported transparent backgrounds
+- Optimized model decompression memory
 
 ### v1.0.2
 
-- 支持问答 / 语音识别 / 动作标注 / 合成播报
+- Supported Q&A / speech recognition / motion tagging / synthesized broadcast
 
 ### v1.0.1
 
-- 初始版本：授权 + 渲染 + 播报
+- Initial version: authorization + rendering + broadcast
 
 ---
 
-## 🔗 开源依赖
+## 🔗 Open Source Dependencies
 
-| 模块                                      | 描述                         |
-|-------------------------------------------|------------------------------|
-| [ONNX](https://github.com/onnx/onnx)      | 通用 AI 模型标准格式         |
-| [ncnn](https://github.com/Tencent/ncnn)   | 高性能神经网络推理框架（腾讯） |
-
----
-
-如需更多集成帮助，请联系技术支持。
+| Module                                   | Description                      |
+|------------------------------------------|----------------------------------|
+| [ONNX](https://github.com/onnx/onnx)     | Universal AI model format        |
+| [ncnn](https://github.com/Tencent/ncnn)  | High-performance neural network inference framework (Tencent) |
+ 
+For additional integration support, please contact technical support.

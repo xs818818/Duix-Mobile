@@ -1,153 +1,118 @@
-简体中文 | [English](/README_en.md)
+English | [中文](/README_zh.md) 
 
-[![Duix Mobile thumbnail](./res/main_video_thumbnail.jpg)](https://www.bilibili.com/video/BV1t2g7z3ERK/)
+# 🚀🚀🚀 Duix Mobile — The Best Real-time Interactive AI Avatar Solution for Mobile Devices
 
-# 🚀🚀🚀 Duix Mobile —— 全网效果最好的移动端【实时对话数字人】
+🔗 **Official website**：[www.duix.com](http://www.duix.com)
 
-**📱 跨平台支持：iOS / Android / 平板 / 车载系统 / VR设备 / IoT终端 / 大屏交互等**
+**📱 Cross-platform support: iOS / Android / Tablet / Automotive / VR / IoT / Large Screen Interaction, etc.**
 
-## 😎 Duix Mobile 是什么？
+https://github.com/user-attachments/assets/6cfb59fc-d4bb-4c9f-8a2b-54009ce594a1
 
-本次由硅基智能开源的 Duix Mobile，是一个**可部署在手机或嵌入式屏幕的实时对话数字人 SDK**。
+## 😎 What is Duix Mobile?
 
-开发者可以轻松集成自有或第三方的大语言模型（LLM）、语音识别（ASR）和语音合成（TTS）服务，快速构建能与用户自然对话的数字人界面。
+Duix Mobile is an open-source SDK developed by [www.duix.com](http://www.duix.com) that enables developers to create real-time interactive AI avatars directly on **mobile devices** or **embedded screens**. It is designed for on-device deployment, with no dependency on cloud servers, making it lightweight, private, and highly responsive.
 
-Duix Mobile 支持一键跨平台部署（Android/iOS），上手门槛低，适用于智能客服、虚拟医生、虚拟律师、虚拟陪伴、虚拟教学等多种应用场景。
+Developers can easily integrate their own or third-party Large Language Models (LLM), Automatic Speech Recognition (ASR), and Text-to-Speech (TTS) services to quickly build AI avatar interfaces that can naturally converse with users.
 
-现在就开始构建你自己的交互数字人，大幅提升你的产品业绩吧！
+Duix Mobile supports one-click cross-platform deployment (Android/iOS), has a low learning curve, and is suitable for various application scenarios such as intelligent customer service, virtual doctors, virtual lawyers, virtual companions, and virtual tutors.
 
-## 🤩 有哪些应用场景？
+Start building your own interactive AI avatar now and significantly boost your product performance!
 
-- Duix Mobile 在 Andorid/iOS/Pad/大屏等设备下可以支持到多种实际应用场景；
-- 大幅度提升你的产品表现力，从而提升你的营收水平。
+## 🤩 Application Scenarios
 
-![](./res/example.png)
+- Duix Mobile supports various practical application scenarios across Android/iOS/Pad/large screen devices;
+- Significantly enhance your product performance and boost your revenue levels.
 
-## 🥳 有什么优势？
+<!-- ![example.png](./res/example.png) -->
 
-- **仿真数字人体验**：自然呈现面部表情、语调和情绪共鸣，打造「像人一样」的 AI 对话。
-- **支持流式音频**：边合成、边说话，支持中途打断、抢话，让数字人不仅会说话，而且更像「人」。
-- **极致响应速度**：数字人响应延迟低于 120ms（测试设备为骁龙® 8 Gen 2 SoC），带来毫秒级流畅互动体验。
-- **成本友好，随处部署**：轻量化运行，资源占用极低，轻松适配手机、平板、智能屏等终端。
-- **无惧弱网环境**：核心处理本地完成，对网络依赖极低，尤其适合金融、政务、法律等高稳定性场景。
-- **全行业适配**：模块化设计，支持快速定制，轻松打造各行业专属数字人解决方案。
+## 🥳 Advantages
 
-## 📑 开发文档
+- **Realistic AI avatar Experience**: Natural facial expressions, tone, and emotional cues enable truly human-like conversations.
+- **Streaming Audio Support**: Synthesize and speak simultaneously, supports interruption and barge-in, making AI avatars not only talk but also behave more "human-like".
+- **Ultra-Low Latency**: AI avatar response latency under 120ms (tested on Snapdragon® 8 Gen 2 SoC), delivering millisecond-level smooth interaction experience.
+- **Cost-Friendly, Deploy Anywhere**: Lightweight operation, extremely low resource consumption, easily adaptable to phones, tablets, smart screens, and other terminals.
+- **Stable in Poor Networks**: Core functions run locally with low network dependence, ideal for finance, government, and legal use cases.
+- **Modular & Customizable**: Designed with modularity to support fast customization of industry-specific AI avatar solutions.
 
-- Android 开发者：[Duix Mobile SDK for Android](./duix-android/dh_aigc_android/README.md)
-- iOS 开发者：[Duix Mobile SDK for iOS](./duix-ios/GJLocalDigitalDemo/README.md)
+## 📑 Development Documentation
 
-## 💚 实际部署案例
+- For Android Developers: [Duix Mobile SDK for Android](./duix-android/dh_aigc_android/README.md)
+- For iOS Developers: [Duix Mobile SDK for iOS](./duix-ios/GJLocalDigitalDemo/README.md)
 
-前往哔哩哔哩查看：
-- [《程序员与奶奶的虚拟重逢》](https://www.bilibili.com/video/BV1QSgczPESS)
-- [《Grok 遇见 Duix，谁才是你的真女友？》](https://www.bilibili.com/video/BV1Dbg3zbExC/)
+## ✨ Public AI avatar Downloads
 
-## ✨ 公用数字人下载 
-
-- 以下是 Duix 提供的 8 个公有数字人，可供下载和集成。
+- 4 public AI avatars provided by Duix, available for download and integration.
 
 <table>
-  <tr>
-    <td align="center">
-      <img src="./res/avatar/1.png" alt="Model 1" width="100%"><br>
-      <a href="https://github.com/duixcom/Duix.mobile/releases/download/v1.0.0/guilv0515_20240516_optim_m80.zip"><button>下载</button></a>
-    </td>
-    <td align="center">
-      <img src="./res/avatar/2.png" alt="Model 2" width="100%"><br>
-      <a href="https://github.com/duixcom/Duix.mobile/releases/download/v1.0.0/guilv3_20240511_optim_m80.zip"><button>下载</button></a>
-    </td>
-    <td align="center">
-      <img src="./res/avatar/3.png" alt="Model 3" width="100%"><br>
-      <a href="https://github.com/duixcom/Duix.mobile/releases/download/v1.0.0/wuhao_20240418_optim_m80.zip"><button>下载</button></a>
-    </td>
-    <td align="center">
-      <img src="./res/avatar/8.png" alt="Model 8" width="100%"><br>
-      <a href="https://github.com/duixcom/Duix.mobile/releases/download/v1.0.0/siyao_20240418_optim_m80.zip"><button>下载</button></a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <img src="./res/avatar/5.jpg" alt="Model 5" width="100%"><br>
-      <a href="https://github.com/duixcom/Duix.mobile/releases/download/v1.0.0/696309955760197_fdc4a25a012c99789cd1ec95f5faf0de_optim_m80.zip"><button>下载</button></a>
-    </td>
-    <td align="center">
-      <img src="./res/avatar/6.png" alt="Model 6" width="100%"><br>
-      <a href="https://github.com/duixcom/Duix.mobile/releases/download/v1.0.0/696303589556293_268307125eeeff7e2c85461dd8c3ac52_optim_m80.zip"><button>下载</button></a>
-    </td>
-    <td align="center">
-      <img src="./res/avatar/7.jpg" alt="Model 7" width="100%"><br>
-      <a href="https://github.com/duixcom/Duix.mobile/releases/download/v1.0.0/696326678212677_9d4da9041e81466f5dadc99ddd1e3bd9.zip"><button>下载</button></a>
-    </td>
-    <td align="center">
-      <img src="./res/avatar/4.png" alt="Model 4" width="100%"><br>
-      <a href="https://github.com/duixcom/Duix.mobile/releases/download/v1.0.0/651686686687301_846161843f9ffdaaeace716bf3436be5_optim_m80.zip"><button>下载</button></a>
-    </td>
-  </tr>
-</table>
+    <tr>
+      <td align="center">
+        <img src="./res/avatar/Leo.jpg" alt="Model 5" width="100%"><br>
+        <a href="https://github.com/duixcom/Duix.mobile/releases/download/v2.0.1/Leo.zip">Download</a>
+      </td>
+      <td align="center">
+        <img src="./res/avatar/Oliver.jpg" alt="Model 6" width="100%"><br>
+        <a href="https://github.com/duixcom/Duix.mobile/releases/download/v2.0.1/Oliver.zip">Download</a>
+      </td>
+      <td align="center">
+        <img src="./res/avatar/Sofia.jpg" alt="Model 6" width="100%"><br>
+        <a href="https://github.com/duixcom/Duix.mobile/releases/download/v2.0.1/Sofia.zip">Download</a>
+      </td>
+      <td align="center">
+        <img src="./res/avatar/Lily.jpg" alt="Model 6" width="100%"><br>
+        <a href="https://github.com/duixcom/Duix.mobile/releases/download/v2.0.1/Lily.zip">Download</a>
+      </td>
+    </tr>
+    </table>
 
-## 🤗 如何定制私有数字人？
+View more AI avatars online：[www.duix.com](http://www.duix.com)
 
-- 部署遇到问题？想要定制私有化数字人？
-- 请发邮件至邮箱：`amos.young@duix.com`
-- 或者加入技术支持群：
+## 🤗 How to Customize Private AI avatars?
 
-<img src="./res/contact.png" alt="企业微信" width="260">
+- Please send an email to: [support@duix.com](mailto:support@duix.com)
 
-## 🙌 常见问题解答
+## 🙌 Frequently Asked Questions
 
 <details>
-<summary>我可以集成自己的大模型（LLM）、语音识别（ASR）和语音合成（TTS）吗？</summary>
+<summary>Can I integrate my own Large Language Model (LLM), Speech-to-Text(ASR), and Text-to-Speech (TTS)?</summary>
 
-当然可以，你可以将 Duix Mobile 的数字人与你的自己 LLM、ASR 和 TTS 进行集成。
+Yes, Duix Mobile supports full integration with custom or third-party LLM, ASR, and TTS services.
+
+</details>
+<details>
+<summary>Does it support "lip synchronization"?</summary>
+
+Yes, it does.
+
+</details>
+    
+<details>
+<summary>Does it support "multilingual subtitles"?</summary>
+
+Yes, it does.
+
+</details>
+<details>
+<summary>How can I create custom AI avatars?</summary>
+
+We offer 4 public avatar models. For custom avatars, please contact us via the email address above.
+
+Usually, providing a 15-second to 2-minute video is typically sufficient for customization.
+</details>
+<details>
+<summary>Is streaming audio supported?</summary>
+
+Yes, streaming audio with barge-in support is available from the July 17, 2025 release.
+</details>
+    
+<details>
+<summary>Are voice start/end callbacks available?</summary>
+
+Yes, callback events for voice start and end are fully documented.
 
 </details>
 
-<details>
-<summary>是否支持「唇动同步」？</summary>
+## ❇️ Other projects by Duix
 
-支持。
-
-</details>
-
-<details>
-<summary>是否支持「多语种字幕」？</summary>
-
-支持。
-
-</details>
-
-<details>
-<summary>我如何创建自定义数字人？</summary>
-
-我们提供了 8 个公有数字人，如需额外定制，请联系上方的企业微信。
-
-通常录制 15 秒至 2 分钟的视频即可完成定制过程，简单便捷。
-
-</details>
-
-<details>
-<summary>是否支持流式音频？</summary>
-
-支持，流式音频已于 2025 年 7 月 17 日版本更新中上线。
-
-</details>
-
-<details>
-<summary>是否提供数字人语音开始和结束的回调？</summary>
-
-是的，我们提供语音开始和结束的回调文档。
-
-</details>
-
-## 💡 版本计划
-
-- [x]  流式音频能力，2025 年 7 月 16 日上线
-- [ ]  算法响应优化，预计时间：2025 年 8 月 30 日前
-
-## 📚 相关开源仓库
-
-- GitHub: https://github.com/duixcom/Duix-Mobile
-- Gitee: https://gitee.com/duix/Duix-Mobile
-- GitCode: https://gitcode.com/openguiji/duix-mobile
-
+- [Duix.com](http://Duix.com) - Easily integrable cloud-based real-time interactive AI avatar
+- [Duix-Avatar](https://github.com/duixcom/Duix.Avatar) - The true open-source AI avatar video production
+- [Duix-Reface](https://github.com/duixcom/Duix-Reface) - Truly open-source real-time, high-fidelity face-swap engine for AI avatar

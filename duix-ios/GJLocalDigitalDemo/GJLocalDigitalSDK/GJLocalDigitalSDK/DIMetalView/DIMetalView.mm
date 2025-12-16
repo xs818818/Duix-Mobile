@@ -146,43 +146,86 @@ typedef NS_ENUM(NSInteger, JPMetalViewContentMode) {
 
 - (void)setupVertex
 {
-    float heightScaling = 1.0;
-    float widthScaling = 1.0;
-    CGSize currentViewSize=CGSizeMake(self.mtkView.frame.size.width,  self.mtkView.frame.size.height);
-    
-    CGRect insetRect = AVMakeRectWithAspectRatioInsideRect(CGSizeMake([DigitalHumanDriven manager].configModel.width, [DigitalHumanDriven manager].configModel.height), CGRectMake(0, 0, currentViewSize.width, currentViewSize.height));
-    switch (_fillMode) {
-        case JPMetalViewContentModeStretch: {
-            widthScaling = 1.0;
-            heightScaling = 1.0;
-            break;
-        }
-        case JPMetalViewContentModeFit: {
-            widthScaling = insetRect.size.width / currentViewSize.width;
-            heightScaling = insetRect.size.height / currentViewSize.height;
-            break;
-        }
-        case JPMetalViewContentModeFill: {
-            widthScaling = currentViewSize.height / insetRect.size.height;
-            heightScaling = currentViewSize.width / insetRect.size.width;
-            break;
-        }
-    }
-    static const LYVertex quadVertices[] =
-    {   // 顶点坐标，分别是x、y、z、w；    纹理坐标，x、y；
-        { {  widthScaling, -heightScaling, 0.0, 1.0 },  { 1.f, 1.f } },
-        { { -widthScaling, -heightScaling, 0.0, 1.0 },  { 0.f, 1.f } },
-        { { -widthScaling,  heightScaling, 0.0, 1.0 },  { 0.f, 0.f } },
-        
-        { {  widthScaling, -heightScaling, 0.0, 1.0 },  { 1.f, 1.f } },
-        { { -widthScaling,  heightScaling, 0.0, 1.0 },  { 0.f, 0.f } },
-        { {  widthScaling,  heightScaling, 0.0, 1.0 },  { 1.f, 0.f } },
-    };
-    
-    self.vertices = [self.mtkView.device newBufferWithBytes:quadVertices
-                                                     length:sizeof(quadVertices)
-                                                    options:MTLResourceStorageModeShared]; // 创建顶点缓存
-    self.numVertices = sizeof(quadVertices) / sizeof(LYVertex); // 顶点个数
+    // 获取视图和纹理的尺寸
+       CGSize viewSize =CGSizeMake(self.mtkView.frame.size.width,  self.mtkView.frame.size.height);
+       CGSize textureSize = CGSizeMake([DigitalHumanDriven manager].configModel.width, [DigitalHumanDriven manager].configModel.height);
+
+       // 计算宽高比
+       float textureAspect = textureSize.width / textureSize.height;
+       float viewAspect = viewSize.width / viewSize.height;
+
+       // 计算缩放因子和纹理坐标
+       float widthScaling = 1.0;
+       float heightScaling = 1.0;
+       float texLeft = 0.0;
+       float texRight = 1.0;
+       float texTop = 0.0;
+       float texBottom = 1.0;
+
+       switch (_fillMode) {
+           case JPMetalViewContentModeStretch: {
+               // 直接拉伸，不保持宽高比
+               widthScaling = 1.0;
+               heightScaling = 1.0;
+               // 纹理坐标保持不变 (0,0) 到 (1,1)
+               break;
+           }
+           case JPMetalViewContentModeFit: {
+               // 保持宽高比，适应视图（可能留有黑边）
+               if (textureAspect > viewAspect) {
+                   // 纹理比视图宽，以宽度为基准缩放
+                   widthScaling = 1.0;
+                   heightScaling = (viewSize.width / textureAspect) / viewSize.height;
+               } else {
+                   // 纹理比视图高，以高度为基准缩放
+                   widthScaling = (viewSize.height * textureAspect) / viewSize.width;
+                   heightScaling = 1.0;
+               }
+               // 纹理坐标保持不变 (0,0) 到 (1,1)
+               break;
+           }
+           case JPMetalViewContentModeFill: {
+               // 保持宽高比，填充视图（可能裁剪部分内容）
+               if (textureAspect > viewAspect) {
+                   // 纹理比视图宽，需要裁剪左右
+                   widthScaling = 1.0;
+                   heightScaling = 1.0;
+                   
+                   // 调整纹理坐标以裁剪左右
+                   float texWidth = viewAspect / textureAspect;
+                   texLeft = (1.0 - texWidth) / 2.0;
+                   texRight = 1.0 - texLeft;
+               } else {
+                   // 纹理比视图高，需要裁剪上下
+                   widthScaling = 1.0;
+                   heightScaling = 1.0;
+                   
+                   // 调整纹理坐标以裁剪上下
+                   float texHeight = textureAspect / viewAspect;
+                   texTop = (1.0 - texHeight) / 2.0;
+                   texBottom = 1.0 - texTop;
+               }
+               break;
+           }
+       }
+
+       // 创建顶点数据
+       LYVertex quadVertices[] = {
+           // 顶点坐标(x, y, z, w)         纹理坐标(x, y)
+           { { widthScaling, -heightScaling, 0.0, 1.0 }, { texRight, texBottom } },
+           { { -widthScaling, -heightScaling, 0.0, 1.0 }, { texLeft, texBottom } },
+           { { -widthScaling, heightScaling, 0.0, 1.0 }, { texLeft, texTop } },
+           
+           { { widthScaling, -heightScaling, 0.0, 1.0 }, { texRight, texBottom } },
+           { { -widthScaling, heightScaling, 0.0, 1.0 }, { texLeft, texTop } },
+           { { widthScaling, heightScaling, 0.0, 1.0 }, { texRight, texTop } },
+       };
+
+       // 创建顶点缓冲区
+       self.vertices = [self.mtkView.device newBufferWithBytes:quadVertices
+                                                        length:sizeof(quadVertices)
+                                                       options:MTLResourceStorageModeShared];
+       self.numVertices = sizeof(quadVertices) / sizeof(LYVertex);
 }
 
 - (void)setupTexture {
